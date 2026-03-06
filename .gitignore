@@ -2,3 +2,20 @@ Assignment(1)_Python_tasks.docx
 Article Similarity Assignment.pdf
 Cafe Sales Data Cleaning.docx
 week_1/Project 1.docx
+week_3\.vscode
+week_3\project_manager_FastAPI\venv
+week_3\project_manager_FastAPI\.vscode
+week_3\project_manager_FastAPI\Frontend\node_modules
+week_3\project_manager_FastAPI\__pycache__
+# VS Code
+.vscode/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Frontend
+node_modules/
+dist/
+.vite/

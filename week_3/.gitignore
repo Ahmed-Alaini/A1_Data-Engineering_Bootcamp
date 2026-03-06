@@ -1,0 +1,17 @@
+@"
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Frontend
+Frontend/node_modules/
+Frontend/dist/
+
+# Env files
+.env
+Frontend/.env
+
+# IDE
+.vscode/
+"@ | Set-Content .gitignore -Encoding UTF8
