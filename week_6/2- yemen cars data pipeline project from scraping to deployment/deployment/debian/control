@@ -1,0 +1,10 @@
+Package: yemen-cars
+Version: 1.0
+Section: base
+Priority: optional
+Architecture: all
+Maintainer: Ahmed eng.ahemd.alaini.com
+Depends: python3, python3-pip
+Description: Yemen Cars Scraper API Service
+ A FastAPI service that scrapes car listings from OpenSooq Yemen,
+ processes the data, and exposes it via REST API.

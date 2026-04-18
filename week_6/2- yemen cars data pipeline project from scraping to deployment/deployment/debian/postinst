@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "Setting up yemen-cars service..."
+
+systemctl daemon-reload
+systemctl enable yemen-cars.service
+systemctl start yemen-cars.service
+
+echo "Service started successfully."

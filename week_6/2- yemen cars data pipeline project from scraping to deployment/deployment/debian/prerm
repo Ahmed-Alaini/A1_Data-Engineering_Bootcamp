@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Stopping yemen-cars service..."
+
+systemctl stop yemen-cars.service
+systemctl disable yemen-cars.service
+
+echo "Service stopped."
