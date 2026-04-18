@@ -13,7 +13,7 @@
 ## 🏗️ معمارية النظام (Architecture)
 توضح الصورة أدناه الهيكلية العامة للنظام ومراحل نقل البيانات (Extract, Transform, Load):
 
-![معمارية المشروع](architecture.png)
+![معمارية المشروع](/docs/architecture.png)
 
 ---
 
