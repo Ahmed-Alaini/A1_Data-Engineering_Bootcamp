@@ -1,7 +1,20 @@
+# ============================================================
+# .gitignore — Data Engineering Assignments (Root Level)
+# ============================================================
+
+
+# ── Large / binary files ─────────────────────────────────────
+# Source database — download from Kaggle instead
+week_8/source/olist.sqlite
+
+# Assignment documents (personal, not source code)
 Assignment(1)_Python_tasks.docx
 Article Similarity Assignment.pdf
 Cafe Sales Data Cleaning.docx
 week_1/Project 1.docx
+
+
+# ── Specific paths (week_3, week_6) ──────────────────────────
 week_3/.vscode
 week_3/project_manager_FastAPI/venv
 week_3/project_manager_FastAPI/.vscode
@@ -10,16 +23,48 @@ week_3/project_manager_FastAPI/__pycache__
 week_6/2- yemen cars data pipeline project from scraping to deployment/venv
 week_6/2- yemen cars data pipeline project from scraping to deployment/.venv
 
-# VS Code
-.vscode/
 
-# Python
+# ── Python (all weeks) ───────────────────────────────────────
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
 venv/
 .venv/
-__pycache__/
-*.pyc
+**/venv/
+**/.venv/
+env/
+.env
 
-# Frontend
+
+# ── IDE / Editor ─────────────────────────────────────────────
+.vscode/
+**/.vscode/
+.idea/
+*.code-workspace
+
+
+# ── Frontend / Node ──────────────────────────────────────────
 node_modules/
+**/node_modules/
 dist/
+**/dist/
 .vite/
+**/.vite/
+build/
+.next/
+
+
+# ── OS junk ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# ── Logs & temp ──────────────────────────────────────────────
+*.log
+*.tmp
+*.swp
