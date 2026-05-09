@@ -1,0 +1,4 @@
+transaction_id,customer_id,product_id,quantity,unit_price,total_amount,currency,payment_method,status,timestamp,location
+91887369-1462-4544-b55e-59ec40ce2d77,CUST_3060,PROD_003,6,52.4,314.4,JPY,PAYPAL,,2026-05-11T06:55:48.371902,New York
+203e8de4-453a-4d35-8147-24b82aef9975,,PROD_003,N/A,27.1,216.8,USD,BANK_TRANSFER,FAILED,2026-05-11T06:55:48.371902,
+91887369-1462-4544-b55e-59ec40ce2d77,CUST_3060,PROD_003,6,52.4,314.4,JPY,PAYPAL,,2026-05-11T06:55:48.371902,New York

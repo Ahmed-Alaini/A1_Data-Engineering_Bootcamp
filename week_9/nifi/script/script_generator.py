@@ -1,83 +1,69 @@
-import os, csv, json, time, random, uuid
-from datetime import datetime, timedelta
-from pathlib import Path
+import csv
+import time
+import random
+import os
+import uuid
+from datetime import datetime
 
-WATCH_DIR = os.getenv("WATCH_DIR", "E:/DE_A1/Data Engineering Bootcamp/spark-sql-and-pyspark-using-python3/lab_data/data/incoming")
-Path(WATCH_DIR).mkdir(parents=True, exist_ok=True)
+# Configuration
+OUTPUT_DIR = "./data/income"
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-FIELDS = [
-    "transaction_id", "customer_id", "product_id", "quantity", "unit_price",
-    "total_amount", "currency", "payment_method", "status", "timestamp", "location"
-]
+products = ['PROD_001', 'PROD_002', 'PROD_003', 'PROD_004', 'PROD_005']
+locations = ['New York', 'London', 'Tokyo', 'Berlin', 'Sydney', '']
+statuses = ['COMPLETED', 'PENDING', 'FAILED', 'REFUNDED', 'UNKNOWN', '']
+currencies = ['USD', 'EUR', 'GBP', 'JPY', '???', 'NONE', '']
+payment_methods = ['CREDIT_CARD', 'PAYPAL', 'BANK_TRANSFER', 'CASH', '']
 
-def maybe(value, chance=0.1):
-    return "" if random.random() < chance else value
-
-def transaction_id():
-    if random.random() < 0.05:
-        return f"{random.randint(1000, 1050)}"
-    return f"{uuid.uuid4().hex[:8].upper()}"
-
-def timestamp():
-    date = datetime.now() - timedelta(seconds=random.randint(0, 3600))
-    return random.choice([
-        date.strftime("%Y-%m-%d %H:%M:%S"),
-        date.strftime("%m/%d/%Y %I:%M:%S %p"),
-        date.isoformat()
-    ])
-
-def make_record():
-    qty = random.choice([random.randint(1, 50), "N/A"])
-    price = maybe(round(random.uniform(1, 999.99), 2), 0.08)
-
-    total = 0
-    if isinstance(qty, int) and price != "":
-        total = round(qty * price, 2)
-
-    return {
-        "transaction_id": transaction_id(),
-        "customer_id": maybe(f"CUST-{random.randint(1000, 9999)}"),
-        "product_id": f"PROD-{random.randint(100, 999)}",
-        "quantity": qty,
-        "unit_price": price,
-        "total_amount": total,
-        "currency": maybe(random.choice(["USD", "EUR", "GBP", "JPY", "???", "NONE", ""])),
-        "payment_method": maybe(random.choice(["CREDIT_CARD", "DEBIT_CARD", "CASH", "PAYPAL"])),
-        "status": random.choice(["COMPLETED", "PENDING", "FAILED", "REFUNDED", ""]),
-        "timestamp": timestamp(),
-        "location": maybe(random.choice(["New York", "London", "Tokyo", "Dubai"]))
+def generate_messy_reading():
+    quantity = random.randint(1, 10)
+    unit_price = round(random.uniform(5.0, 150.0), 2)
+    total_amount = round(quantity * unit_price, 2)
+    
+    reading = {
+        "transaction_id": str(uuid.uuid4()),
+        "customer_id": f"CUST_{random.randint(1000, 9999)}",
+        "product_id": random.choice(products),
+        "quantity": quantity,
+        "unit_price": unit_price,
+        "total_amount": total_amount,
+        "currency": random.choice(currencies),
+        "payment_method": random.choice(payment_methods),
+        "status": random.choice(statuses),
+        "timestamp": datetime.now().isoformat(),
+        "location": random.choice(locations)
     }
+    
+    # Introduce messy data (missing values, weird strings)
+    if random.random() < 0.1: 
+        reading["customer_id"] = '' # Missing customer
+    if random.random() < 0.1:
+        reading["quantity"] = 'N/A' # Messy quantity
+        
+    return reading
 
-def save_file(records, path, file_type):
-    with open(path, "w", newline="", encoding="utf-8") as file:
-        if file_type == "csv":
-            writer = csv.DictWriter(file, fieldnames=FIELDS)
-            writer.writeheader()
-            writer.writerows(records)
+def write_to_csv():
+    # please I need the current data and time in transaction file name
 
-        elif file_type == "json":
-            for record in records:
-                file.write(json.dumps(record) + "\n")
+    filename = os.path.join(OUTPUT_DIR, f"transaction_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv")
+    data = [generate_messy_reading() for _ in range(random.randint(1, 5))]
+    
+    # Introduce duplicates
+    if random.random() < 0.2 and len(data) > 0:
+        data.append(data[0]) 
 
-        else:
-            file.write("|".join(FIELDS) + "\n")
-            for record in records:
-                file.write("|".join(str(record[field]) for field in FIELDS) + "\n")
-
-def main():
-    while True:
-        file_type = random.choice(["csv", "json", "txt"])
-        records = [make_record() for _ in range(random.randint(50, 200))]
-
-        name = f"Transaction_{datetime.now().strftime('%Y%m%d_%H%M%S')}.{file_type}"
-        path = os.path.join(WATCH_DIR, name)
-
-        save_file(records, path, file_type)
-
-        print(f"Created {name} with {len(records)} records")
-        time.sleep(random.randint(2, 5))
+    with open(filename, mode='w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=["transaction_id", "customer_id", "product_id", "quantity", "unit_price", "total_amount", "currency", "payment_method", "status", "timestamp", "location"])
+        writer.writeheader()
+        writer.writerows(data)
+    
+    print(f"Generated {filename}")
 
 if __name__ == "__main__":
-    main()
-
-
+    print("Starting data simulation... Press Ctrl+C to stop.")
+    try:
+        while True:
+            write_to_csv()
+            time.sleep(2) # Writes files periodically
+    except KeyboardInterrupt:
+        print("Simulation stopped.")
