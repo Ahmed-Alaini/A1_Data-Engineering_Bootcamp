@@ -23,7 +23,7 @@ week_3/project_manager_FastAPI/__pycache__
 week_6/2- yemen cars data pipeline project from scraping to deployment/venv
 week_6/2- yemen cars data pipeline project from scraping to deployment/.venv
 
-
+fraud detection project\shared\jars
 # ── Python (all weeks) ───────────────────────────────────────
 __pycache__/
 **/__pycache__/
@@ -38,6 +38,9 @@ venv/
 **/.venv/
 env/
 .env
+.jar
+.csv
+.sql
 
 
 # ── IDE / Editor ─────────────────────────────────────────────
